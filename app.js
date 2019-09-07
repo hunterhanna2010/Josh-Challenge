@@ -4,27 +4,84 @@
             /*to accomplish this task, I have an input field text box, but I need
             to create a button element. Add a click event listener to the button. And then add
             the value of the input text box to the html page. I will set up list structure and append it to the input value. This way someone could add dan marino or jo montana*/
-            
+            let qbs = 0;
             const button = document.createElement('BUTTON');
             button.textContent = 'Add Your Top 3 QBs';
             document.getElementById('qb').appendChild(button);
 
-            const addItemInput = document.querySelector('input.addItemInput');
             button.addEventListener('click', () => {
+                true;
                 let ul = document.getElementsByTagName('ul')[0];
                 let li =document.createElement('li');
                 li.textContent = addItemInput.value;
                 ul.appendChild(li);
+                attachListItemButton(li);
                 addItemInput.value = ' ';
                 console.log(li);
+                qbs++;
+                console.log(qbs);
+            })
+            
+        
+            //decided to add some functionality buttons to the dom so the user can adjust where their favorite qb should be
+            const listDiv = document.querySelector('.qb');
+            const listUl = listDiv.querySelector('ul');
+            const addItemInput = document.querySelector('input.addItemInput');
+            
+            function attachListItemButton(li) {
+                let up = document.createElement('button')
+                let down = document.createElement('button')
+                let remove = document.createElement('button')
                 
-});
+                up.className = 'up';
+                up.textContent = 'Move QB UP';
+                li.appendChild(up);
+                
+                down.className = 'down';
+                down.textContent = 'Move QB DOWN';
+                li.appendChild(down);
+                
+                remove.className = 'remove';
+                remove.textContent = 'Take Him Out';
+                li.appendChild(remove);
+              }
+              
+              listUl.addEventListener('click', (event) => {
+                if (event.target.tagName == 'BUTTON') {
+                  if (event.target.className == 'remove') {
+                   let li = event.target.parentNode;
+                   let ul = li.parentNode;
+                   ul.removeChild(li);
+                  }
+                }
             
-            
-        
-        
-            
-            //2: Rearrange the best running backs in the league to reverse their order
+                  if (event.target.className == 'up') {
+                   let li = event.target.parentNode;
+                   let prevLi = li.previousElementSibling;
+                   let ul = li.parentNode;
+                   if(prevLi) { 
+                   ul.insertBefore(li, prevLi);
+                   }
+                  }  
+                   if (event.target.className == 'down') {
+                   let li = event.target.parentNode;
+                   let nextLi = li.nextElementSibling;
+                   let ul = li.parentNode;
+                   if(nextLi) { 
+                   ul.insertBefore(nextLi, li);
+                  }
+                }; 
+
+              });
+                
+              //trying to remove event listener from click so users can't add more than 3 qbs
+              /*for(let i = 0; i <= li.length; i++) {
+                if (qbs > 3) {
+                    button.removeEventListener('click', () => {
+                    let p = document.textContent = 'too many qbs';   
+                    })*/
+                
+                //2: Rearrange the best running backs in the league to reverse their order
                 //get list items as a node list
             const rbList = document.querySelector('#rbList');
                 //convert ul items to an array
